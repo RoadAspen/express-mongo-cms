@@ -4,6 +4,8 @@ import http from "http";
 import path from "path";
 import url from "url";
 import { getFileMime } from "./common";
+import { MongoClient } from "mongodb";
+import mongoClient from "./db";
 
 export default class expressApp {
   private routes: {
@@ -31,7 +33,7 @@ export default class expressApp {
           console.log("pathname", pathname);
           route(req, res);
         } catch (error) {
-          res.writeHead(404, { "Content-Type": "text/html;charset='utf-8'" });
+          res.writeHead(404, { "Content-Type": "text/html;charset=utf-8" });
           res.end("not found");
         }
       })
@@ -56,7 +58,7 @@ export default class expressApp {
             const extName = path.extname(urls);
             const mime = getFileMime(extName.slice(1));
             res.writeHead(200, {
-              "Content-Type": `${mime};charset='utf-8'`,
+              "Content-Type": `${mime};charset=utf-8`,
             });
             /** 结束相应 */
             res.end(data);

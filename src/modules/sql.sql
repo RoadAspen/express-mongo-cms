@@ -92,3 +92,15 @@ db.order_item.aggregate([
       $group:{_id:"$order_id",total:{$sum:1}}
     }
 ]);
+
+/** 连表查询 */
+db.order.aggregate([
+  {
+    $lookup:{
+      from:"order_item",
+      localField:"order_id",
+      foreignField:"order_id",
+      as:"items"
+    }
+  }
+])
