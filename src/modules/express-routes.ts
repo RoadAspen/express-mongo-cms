@@ -4,8 +4,6 @@ import http from "http";
 import path from "path";
 import url from "url";
 import { getFileMime } from "./common";
-import { MongoClient } from "mongodb";
-import mongoClient from "./db";
 
 export default class expressApp {
   private routes: {
@@ -46,16 +44,14 @@ export default class expressApp {
     },
     pathname: string
   ) => {
-    const urls = `../${this.staticPath || ""}` + pathname;
-    console.log("urls", urls);
-    if (pathname !== "/favicon.ico") {
+    if (pathname !== "/favicon.ico" && pathname.includes(this.staticPath)) {
       try {
-        const isFile = fs.statSync(urls);
+        const isFile = fs.statSync(pathname);
         console.log("isFile", isFile);
         if (isFile.isFile()) {
-          const data = fs.readFileSync(urls);
+          const data = fs.readFileSync(pathname);
           if (data) {
-            const extName = path.extname(urls);
+            const extName = path.extname(pathname);
             const mime = getFileMime(extName.slice(1));
             res.writeHead(200, {
               "Content-Type": `${mime};charset=utf-8`,
@@ -65,7 +61,9 @@ export default class expressApp {
           }
         }
       } catch (error) {
-        console.log(error);
+        res.writeHead(404);
+        /** 结束相应 */
+        res.end("");
       }
     }
   };

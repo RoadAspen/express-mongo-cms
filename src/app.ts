@@ -24,13 +24,18 @@ app.post("/doLogin", (req, res) => {
   });
 });
 
-app.get("/", async (req, res) => {
-  await client.connect();
-  const db = client.db(dbName);
-  /** 查找数据 */
-  const userFind = await db.collection("order").find().toArray();
-  console.log("userFind", userFind);
-  await client.close();
-  res.writeHead(200, { "Content-Type": "text/html;charset=utf-8" });
-  res.end("首页");
+app.get("/user", (req, res) => {
+  console.log("user");
+  client.connect().then(() => {
+    const db = client.db(dbName);
+    db.collection("user")
+      .find()
+      .toArray()
+      .then((userList) => {
+        client.close();
+        ejs.renderFile("./src/views/user.ejs", { userList }, (err, data) => {
+          res.end(data);
+        });
+      });
+  });
 });
