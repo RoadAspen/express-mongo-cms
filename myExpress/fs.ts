@@ -2,7 +2,7 @@
 import fs from "fs";
 
 /** 判断文件还是文件夹 */
-fs.stat("./src/test", (err, data) => {
+fs.stat("./myExpress/test", (err, data) => {
   if (err) {
     console.log(err);
   } else {
@@ -17,7 +17,7 @@ fs.stat("./src/test", (err, data) => {
   }
 });
 /** 创建文件夹 */
-fs.mkdir("./src/test", (err) => {
+fs.mkdir("./myExpress/test", (err) => {
   if (err) {
     console.log(err);
   } else {
@@ -25,7 +25,7 @@ fs.mkdir("./src/test", (err) => {
   }
 });
 /** 创建文件夹 */
-fs.mkdir("./src/tests", (err) => {
+fs.mkdir("./myExpress/tests", (err) => {
   if (err) {
     console.log(err);
   } else {
@@ -34,7 +34,7 @@ fs.mkdir("./src/tests", (err) => {
 });
 
 /** 创建文件 */
-fs.writeFile("./src/test/write.txt", "你好\n", (err) => {
+fs.writeFile("./myExpress/test/write.txt", "你好\n", (err) => {
   if (err) {
     console.log(err);
   } else {
@@ -43,7 +43,7 @@ fs.writeFile("./src/test/write.txt", "你好\n", (err) => {
 });
 
 /** 追加文件 */
-fs.appendFile("./src/test/write.txt", "你好\n", (err) => {
+fs.appendFile("./myExpress/test/write.txt", "你好\n", (err) => {
   if (err) {
     console.log(err);
   } else {
@@ -52,7 +52,7 @@ fs.appendFile("./src/test/write.txt", "你好\n", (err) => {
 });
 
 /** 读取文件*/
-fs.readFile("./src/test/write.txt", (err, data) => {
+fs.readFile("./myExpress/test/write.txt", (err, data) => {
   if (err) {
     console.log(err);
   } else {
@@ -61,7 +61,7 @@ fs.readFile("./src/test/write.txt", (err, data) => {
 });
 
 /** 读取文件夹*/
-fs.readdir("./src/test", (err, data) => {
+fs.readdir("./myExpress/test", (err, data) => {
   if (err) {
     console.log(err);
   } else {
@@ -70,19 +70,11 @@ fs.readdir("./src/test", (err, data) => {
 });
 
 /** 重命名、移动文件 */
-fs.rename("./src/test/write.txt", "./src/test/writes.txt", (err, data) => {
-  if (err) {
-    console.log(err);
-  } else {
-    console.log("重命名文件成功", data);
-  }
+fs.rename("./myExpress/test/write.txt", "./myExpress/test/writes.txt", () => {
+  console.log("重命名文件成功");
 });
-fs.rename("./src/test/writes.txt", "../tests/writes.txt", (err, data) => {
-  if (err) {
-    console.log(err);
-  } else {
-    console.log("移动文件成功", data);
-  }
+fs.rename("./myExpress/test/writes.txt", "../tests/writes.txt", () => {
+  console.log("移动文件成功");
 });
 
 /** 删除 */

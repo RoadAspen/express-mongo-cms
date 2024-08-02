@@ -7,7 +7,7 @@ import querystring from "querystring";
 const app = new expressApp();
 app.static("static");
 app.get("/login", (req, res) => {
-  ejs.renderFile("./src/views/login.ejs", {}, (err, data) => {
+  ejs.renderFile("./myExpress/views/login.ejs", {}, (err, data) => {
     res.end(data);
   });
 });
@@ -26,24 +26,28 @@ app.post("/doLogin", (req, res) => {
 });
 /** 获取用户列表 */
 app.get("/user", (req, res) => {
-  console.log("user");
   client.connect().then(() => {
     const db = client.db(dbName);
     db.collection("user")
       .find()
       .toArray()
       .then((userList) => {
+        console.log("user", userList);
         client.close();
-        ejs.renderFile("./src/views/user.ejs", { userList }, (err, data) => {
-          res.end(data);
-        });
+        ejs.renderFile(
+          "./myExpress/views/user.ejs",
+          { userList },
+          (err, data) => {
+            res.end(data);
+          }
+        );
       });
   });
 });
 
 /** 注册页面 */
 app.get("/register", (req, res) => {
-  ejs.renderFile("./src/views/registry.ejs", (err, data) => {
+  ejs.renderFile("./myExpress/views/registry.ejs", (err, data) => {
     res.end(data);
   });
 });

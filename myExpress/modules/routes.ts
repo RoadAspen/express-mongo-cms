@@ -52,7 +52,7 @@ export const app: {
       req: http.IncomingMessage;
     }
   ) => {
-    ejs.renderFile("./src/views/login.ejs", {}, (err, data) => {
+    ejs.renderFile("./views/login.ejs", {}, (err, data) => {
       res.end(data);
     });
   },
@@ -97,7 +97,7 @@ export const app: {
       },
     ];
     ejs.renderFile(
-      "./src/views/news.ejs",
+      "./views/news.ejs",
       { user: { name: "嘿嘿" }, msg, newsList: list, page: query.page },
       (err, data) => {
         res.end(data);
