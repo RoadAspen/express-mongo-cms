@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .title {
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <h2 class="title">这是一个注册页面</h2>
+    <form action="/doRegister" method="post">
+      <div>
+        <label for="username">用户名：</label>
+        <input type="text" name="username" />
+      </div>
+      <div>
+        <label for="age">年龄：</label>
+        <input type="number" name="age" />
+      </div>
+      <div>
+        <label for="password">密码：</label>
+        <input type="text" name="password" />
+      </div>
+      <button type="submit">提交</button>
+    </form>
+  </body>
+</html>

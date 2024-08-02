@@ -2,6 +2,7 @@
 import ejs from "ejs";
 import expressApp from "./modules/express-routes";
 import { client, dbName } from "./modules/db";
+import querystring from "querystring";
 
 const app = new expressApp();
 app.static("static");
@@ -23,7 +24,7 @@ app.post("/doLogin", (req, res) => {
     res.end("post ok");
   });
 });
-
+/** 获取用户列表 */
 app.get("/user", (req, res) => {
   console.log("user");
   client.connect().then(() => {
@@ -37,5 +38,33 @@ app.get("/user", (req, res) => {
           res.end(data);
         });
       });
+  });
+});
+
+/** 注册页面 */
+app.get("/register", (req, res) => {
+  ejs.renderFile("./src/views/registry.ejs", (err, data) => {
+    res.end(data);
+  });
+});
+
+/** 注册 */
+app.post("/doRegister", (req, res) => {
+  let data = "";
+  req.on("data", (chunk) => {
+    data += chunk;
+  });
+  req.on("end", () => {
+    const parseData = querystring.parse(data);
+    console.log("data", parseData);
+    client.connect().then(() => {
+      const db = client.db(dbName);
+      db.collection("user")
+        .insertOne({ username: parseData.username, age: parseData.age })
+        .then(() => {
+          client.close();
+          res.end("post ok");
+        });
+    });
   });
 });
