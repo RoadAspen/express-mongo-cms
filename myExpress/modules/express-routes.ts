@@ -23,7 +23,8 @@ export default class expressApp {
     const that = this;
     http
       .createServer(function (req, res) {
-        let pathname = url.parse(req.url || "").pathname || "/";
+        const myURL = new URL(req.url as string, "http://127.0.0.1:8081/");
+        let pathname = myURL.pathname;
         that.initStatic(req, res, pathname);
         pathname = `${req.method} ${pathname}`;
         const route = that.routes[pathname];
@@ -44,15 +45,15 @@ export default class expressApp {
     },
     pathname: string
   ) => {
-    if (pathname !== "/favicon.ico" && pathname.includes(this.staticPath)) {
+    const extName = path.extname(pathname);
+    if (pathname !== "/favicon.ico" && extName) {
+      const mime = getFileMime(extName.slice(1));
       try {
-        const isFile = fs.statSync(pathname);
+        const isFile = fs.statSync(this.staticPath + pathname);
         console.log("isFile", isFile);
         if (isFile.isFile()) {
-          const data = fs.readFileSync(pathname);
+          const data = fs.readFileSync(this.staticPath + pathname);
           if (data) {
-            const extName = path.extname(pathname);
-            const mime = getFileMime(extName.slice(1));
             res.writeHead(200, {
               "Content-Type": `${mime};charset=utf-8`,
             });
