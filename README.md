@@ -1,1 +1,1 @@
-/** 使用 supervisor 坚挺文件变化 */
+本项目使用 express + mongoDB 技术栈

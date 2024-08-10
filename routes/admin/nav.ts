@@ -1,21 +1,25 @@
 import express from "express";
-/** 用户模块 */
+import tools from "../../model/tools";
+/** 导航模块 */
 const router = express.Router();
-// 用户列表
+
+// 导航列表
 router.get("/", (req, res) => {
-  res.send("用户列表");
+  res.send("导航列表");
 });
-// 增加用户
+// 增加导航
 router.get("/add", (req, res) => {
-  res.send("增加用户");
+  res.render("admin/nav/add");
 });
-// 修改用户
+// 修改导航
 router.get("/edit", (req, res) => {
-  res.send("修改用户");
+  res.send("修改导航");
 });
 // 执行增加
-router.post("/doAdd", (req, res) => {
-  res.send("执行增加");
+router.post("/doAdd", tools.multer().single("avatar"), (req, res) => {
+  const body = req.body;
+  const file = req.file;
+  res.send({ body: body, file });
 });
 // 执行修改
 router.post("/doEdit", (req, res) => {

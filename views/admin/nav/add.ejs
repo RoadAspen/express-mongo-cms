@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>增加导航</title>
+  </head>
+  <body>
+    <h3>增加导航</h3>
+    <form action="/admin/nav/doAdd" method="post" enctype="multipart/form-data">
+      <label for="title"
+        >标题：<input type="text" name="title" id="title"
+      /></label>
+      <br />
+      <br />
+      <label for="avatar">
+        图片：
+        <input name="avatar" id="avatar" type="file">
+      </label>
+      <br />
+      <br />
+      <label for="desc" style="vertical-align: top"
+        >描述：
+
+        <textarea
+          name="desc"
+          id="desc"
+          cols="30"
+          rows="10"
+        /></textarea>
+      </label>
+      <br />
+      <input type="submit" value="提交" />
+    </form>
+  </body>
+</html>
