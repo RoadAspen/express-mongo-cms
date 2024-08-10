@@ -3,7 +3,9 @@ import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import session from "express-session";
 import MongoStore from "connect-mongo";
-import login from "./routes/login";
+import admin from "./routes/admin";
+import index from "./routes/index";
+import api from "./routes/api";
 /** 引入express */
 const app = express();
 /** 配置模版引擎,默认views文件夹就是模版文件夹 */
@@ -52,33 +54,10 @@ declare module "express-session" {
     username: string;
   }
 }
-app.use("/login", login);
+app.use("/admin", admin);
+app.use("/api", api);
+app.use("/", index);
 
-app.get("/", (req, res) => {
-  res.render("index.ejs", { user: req.session.username });
-});
-
-/** 2. 路由级中间件 */
-app.get("/order", (req, res, next) => {
-  console.log("路由级中间件");
-  next();
-});
-
-app.get("/article", (req, res) => {
-  // 获取cookie
-  const username = req.cookies.username;
-  /** 使用模版引擎渲染 */
-  res.send("新闻页面" + username);
-});
-/** 订单列表 */
-app.get("/news", (req, res) => {
-  const userInfo = {
-    username: "张三",
-    age: 20,
-  };
-  let article = "<h3>我是一个article</h3>";
-  res.render("news.ejs", { userInfo: userInfo, article, flag: true });
-});
 /** 3. 错误处理中间件 */
 app.use((req, res, next) => {
   res.status(404).send("404");
