@@ -12,7 +12,10 @@ const UserSchema = new Schema({
   username: String,
   age: Number,
   password: String,
-  role: String,
+  role: {
+    type: String,
+    default: "admin",
+  },
   phone: Number,
   email: String,
 });
@@ -33,17 +36,16 @@ User.find({})
 // 5.1 先实例化Modal，通过实例化 User Modal来创建增加的数据
 // 5.2 实例化数据
 
-// const user1 = new User({
-//   username: "章三",
-//   password: "1234534",
-//   email: "admin@admin.com",
-//   phone: "12345678901",
-//   age: 32,
-//   role: "admin",
-// });
-// user1.save().then(() => {
-//   console.log("创建成功");
-// });
+const user1 = new User({
+  username: "章三默认角色",
+  password: "1234534",
+  email: "admin@admin.com",
+  phone: "12345678901",
+  age: 32,
+});
+user1.save().then(() => {
+  console.log("创建成功");
+});
 
 // 6. 更新数据
 // User.updateOne(
