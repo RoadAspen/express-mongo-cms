@@ -1,5 +1,5 @@
 import express from "express";
-import user from "./admin/user";
+import user from "./admin/manager";
 import nav from "./admin/nav";
 import login from "./admin/login";
 const router = express.Router();

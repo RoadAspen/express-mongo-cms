@@ -6,10 +6,13 @@ import MongoStore from "connect-mongo";
 import admin from "./routes/admin";
 import index from "./routes/index";
 import api from "./routes/api";
+import manager from "./routes/admin/manager";
+import ejs from "ejs";
 /** 引入express */
 const app = express();
 /** 配置模版引擎,默认views文件夹就是模版文件夹 */
 app.set("view engine", "ejs");
+app.engine("html", ejs.renderFile);
 /** 4. 内置中间件 */
 app.use(express.static("static"));
 /** 1. 应用级中间件，用于权限判断 */
@@ -56,10 +59,11 @@ declare module "express-session" {
 }
 app.use("/admin", admin);
 app.use("/api", api);
+app.use("/manager", manager);
 app.use("/", index);
 
 /** 3. 错误处理中间件 */
-app.use((req, res, next) => {
+app.use((req, res) => {
   res.status(404).send("404");
 });
 app.listen(8081);
